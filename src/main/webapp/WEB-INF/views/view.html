@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<body>
+<h3>Student Details</h3>
+<p>
+    <a th:href="@{/students}">
+        Back to student list
+    </a>
+</p>
+<div id="student-details">
+    <div>
+        <label>Firstname:</label>
+        <span th:text="${student.firstname}"></span>
+    </div>
+    <div>
+        <label>Lastname:</label>
+        <span th:text="${student.lastname}"></span>
+    </div>
+    <div>
+        <label>Date of Birth:</label>
+        <span th:text="${student.dob}"></span>
+    </div>
+    <div>
+        <label>Address:</label>
+        <span th:text="${student.address}"></span>
+    </div>
+    <div>
+        <label>Mark:</label>
+        <span th:text="${student.mark}"></span>
+    </div>
+    <div>
+        <label>Image:</label>
+        <img th:src="@{'/image/' + ${student.img}}" alt="Student Image" width="100" height="100"/>
+    </div>
+</div>
+</body>
+</html>
