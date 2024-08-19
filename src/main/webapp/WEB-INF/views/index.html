@@ -3,6 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>List Student</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        .notify {
+            margin-bottom: 20px;
+        }
+
+        .notify div {
+            padding: 10px;
+            background-color: #dff0d8;
+            border: 1px solid #d6e9c6;
+            border-radius: 4px;
+            color: #3c763d;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #students {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #students th, #students td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        #students th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        #students td img {
+            border-radius: 4px;
+        }
+
+        #students tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        #students tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
 <h3>List Student</h3>
@@ -38,9 +99,9 @@
         <td th:text="${row.address}"></td>
         <td th:text="${row.mark}"></td>
         <td><img th:src="@{'/image/'+${row.img}}" alt="Student Image" width="100"></td>
-        <td><a th:href="@{/students/{id}/edit(id=${row.getId()})}">edit</a></td>
-        <td><a th:href="@{/students/{id}/delete(id=${row.getId()})}">delete</a></td>
-        <td><a th:href="@{/students/{id}/view(id=${row.getId()})}">view</a></td>
+        <td><a th:href="@{/students/{id}/edit(id=${row.getId()})}">Edit</a></td>
+        <td><a th:href="@{/students/{id}/delete(id=${row.getId()})}">Delete</a></td>
+        <td><a th:href="@{/students/{id}/view(id=${row.getId()})}">View</a></td>
     </tr>
     </tbody>
 </table>
