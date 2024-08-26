@@ -4,8 +4,12 @@ package com.example.studentminitest.controller;
 import com.example.studentminitest.model.Student;
 import com.example.studentminitest.model.StudentForm;
 import com.example.studentminitest.service.IStudentService;
+import com.example.studentminitest.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -16,22 +20,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/students")
 public class StudentController {
     @Autowired
-    private IStudentService studentService;
+    private StudentService studentService;
 
     @Value("${file-upload}")
     private String upload;
 
+    @ModelAttribute("student")
+    public Iterable<Student> manufacturers() {return studentService.findAll();}
+
     @GetMapping("")
-    public String index(Model model) {
-        List<Student> studentList = studentService.findAll();
-        model.addAttribute("student", studentList);
-        return "/index";
+    public ModelAndView index(@PageableDefault(value = 5) Pageable pageable) {
+        Page<Student> studentList = studentService.findAll(pageable);
+        ModelAndView modelAndView = new ModelAndView("/index");
+        modelAndView.addObject("student", studentList);
+        return modelAndView;
     }
 
     @GetMapping("/create")
@@ -57,8 +64,8 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/delete")
-    public String delete(@PathVariable int id, Model model) {
-        Student student = studentService.findById(id);
+    public String delete(@PathVariable Long id, Model model) {
+        Student student = studentService.findById(id).get();
         model.addAttribute("student", student);
         return "/delete";
     }
@@ -71,21 +78,21 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/view")
-    public String view(@PathVariable int id, Model model) {
+    public String view(@PathVariable Long id, Model model) {
         model.addAttribute("student", studentService.findById(id));
         return "/view";
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable int id, Model model) {
-        Student student = studentService.findById(id);
+    public String edit(@PathVariable Long id, Model model) {
+        Student student = studentService.findById(id).get();
         model.addAttribute("student", student);
         return "/edit";
     }
 
     @PostMapping("/update")
     public ModelAndView update(@ModelAttribute StudentForm studentForm) {
-        Student existingStudent = studentService.findById(studentForm.getId());
+        Student existingStudent = studentService.findById(studentForm.getId()).get();
 
         MultipartFile file = studentForm.getImg();
         String fileName = file.getOriginalFilename();
@@ -109,5 +116,10 @@ public class StudentController {
         ModelAndView mav = new ModelAndView("redirect:/students");
         mav.addObject("message", "Student updated successfully");
         return mav;
+    }
+
+    @DeleteMapping("/clear")
+    public void clearStudent() {
+        studentService.truncateStudent();
     }
 }

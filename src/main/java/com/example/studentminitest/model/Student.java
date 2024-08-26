@@ -9,7 +9,7 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String firstname;
     private String lastname;
     private String dob; // Date of birth
@@ -21,7 +21,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(int id, String firstname, String lastname, String dob, String address, double mark, String img) {
+    public Student(Long id, String firstname, String lastname, String dob, String address, double mark, String img) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -41,11 +41,11 @@ public class Student {
     }
 
     // Getters and Setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -3,7 +3,7 @@ package com.example.studentminitest.model;
 import org.springframework.web.multipart.MultipartFile;
 
 public class StudentForm {
-    private int id;
+    private Long id;
     private String firstname;
     private String lastname;
     private String dob; // Date of birth
@@ -14,7 +14,7 @@ public class StudentForm {
     public StudentForm() {
     }
 
-    public StudentForm(int id, String firstname, String lastname, String dob, String address, double mark, MultipartFile img) {
+    public StudentForm(Long id, String firstname, String lastname, String dob, String address, double mark, MultipartFile img) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -24,11 +24,11 @@ public class StudentForm {
         this.img = img;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
